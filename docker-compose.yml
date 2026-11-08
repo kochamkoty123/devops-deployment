@@ -1,0 +1,27 @@
+services:
+  web:
+    build: .
+    container_name: devops_web_app
+    ports:
+      - "5001:5000"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - APP_ENV=production
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: always
+
+  redis:
+    image: redis:7-alpine
+    container_name: devops_redis_db
+    # Port bazy jest dostępny wewnętrznie w sieci Dockera (izolacja bezpieczeństwa)
+    expose:
+      - "6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    restart: always
