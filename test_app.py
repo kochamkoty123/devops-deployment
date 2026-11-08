@@ -17,4 +17,4 @@ def test_index_endpoint(client):
     """Test odpowiedzi strony głównej"""
     response = client.get("/")
     assert response.status_code == 200
-    assert response.json["status"] == "success"
+    assert "Ilość wejść" in response.get_data(as_text=True)

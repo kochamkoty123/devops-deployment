@@ -21,12 +21,7 @@ def index():
     except Exception as e:
         visits = f"Brak połączenia z bazą ({str(e)})"
 
-    return jsonify({
-        "message": "Witaj w aplikacji demonstracyjnej DevOps!",
-        "status": "success",
-        "visits": visits,
-        "environment": os.getenv("APP_ENV", "development")
-    })
+    return f"<h1>Ilość wejść: {visits}</h1>"
 
 @app.route("/health")
 def health():
